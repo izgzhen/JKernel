@@ -47,7 +47,10 @@ int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
 
     printf("Initialize serial ports...\n");
     init_serial();
-    write_serial('a');
+    //    write_serial('a');
+
+    while(TRUE)
+      printf("Serial Output:%c\n",read_serial());
 
     printf("Switching to user mode...\n");
     switch_to_user_mode();
