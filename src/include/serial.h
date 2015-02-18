@@ -7,3 +7,4 @@ uint8_t serial_received();
 uint8_t read_serial();
 uint8_t is_transmit_empty();
 void write_serial(char);
+void s_write(char*);

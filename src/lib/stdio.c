@@ -79,9 +79,7 @@ void monitor_write(const char *c)
 {
     int i = 0;
     while (c[i])
-    {
         monitor_put(c[i++]);
-    }
 }
 
 void monitor_write_hex(uint32_t n)

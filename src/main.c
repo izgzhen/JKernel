@@ -10,9 +10,43 @@
 #include <task.h>
 #include <syscall.h>
 #include <serial.h>
+#include <test/memory.h>
 
 extern uint32_t placement_address;
 uint32_t initial_esp;
+
+void serial_com(){
+    s_write("Serial ports...\n");
+    printf("From serial:\n");
+    while(TRUE)
+      printf("%c",read_serial());
+}
+
+void showFS(){
+  int i = 0;
+  struct dirent *node = 0;
+  while ( (node = readdir_fs(fs_root, i)) != 0)
+    {
+      monitor_write("Found file ");
+      monitor_write(node->name);
+      fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+
+      if ((fsnode->flags&0x7) == FS_DIRECTORY)
+	monitor_write("\n\t(directory)\n");
+      else
+	{
+	  monitor_write("\n\t contents: \"");
+	  char buf[256];
+	  uint32_t sz = read_fs(fsnode, 0, 256, buf);
+	  int j;
+	  for (j = 0; j < sz; j++)
+	    monitor_put(buf[j]);
+
+	  monitor_write("\"\n");
+	}
+      i++;
+    }
+}  
 
 int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
 {
@@ -45,12 +79,12 @@ int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
     printf("Initialize system call...\n");
     initialise_syscalls();
 
-    printf("Initialize serial ports...\n");
+    printf("Initialize serial ports..\n");
     init_serial();
-    //    write_serial('a');
+    
+    showFS();
 
-    while(TRUE)
-      printf("Serial Output:%c\n",read_serial());
+    show_allocated_frames();
 
     printf("Switching to user mode...\n");
     switch_to_user_mode();
