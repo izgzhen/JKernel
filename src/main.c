@@ -9,6 +9,7 @@
 #include <initrd.h>
 #include <task.h>
 #include <syscall.h>
+#include <serial.h>
 
 extern uint32_t placement_address;
 uint32_t initial_esp;
@@ -43,6 +44,10 @@ int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
 
     printf("Initialize system call...\n");
     initialise_syscalls();
+
+    printf("Initialize serial ports...\n");
+    init_serial();
+    write_serial('a');
 
     printf("Switching to user mode...\n");
     switch_to_user_mode();

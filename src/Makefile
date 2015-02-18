@@ -21,7 +21,8 @@ SOURCES=                			\
 	fs/initrd.o\
 	process/task.o\
 	usr/syscall.o\
-	test/memory.o
+	test/memory.o\
+	dev/serial.o
 
 CFLAGS=-g -O0 -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -m32 -I./include
 LDFLAGS=-Tlink.ld -melf_i386
