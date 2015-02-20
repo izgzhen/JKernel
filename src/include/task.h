@@ -37,6 +37,8 @@ void switch_to_user_mode();
 // memory space.
 int32_t fork();
 
+// No exevce? Shit ....
+
 // Causes the current process' stack to be forcibly moved to a new location.
 void move_stack(void *new_stack_start, uint32_t size);
 
