@@ -24,6 +24,8 @@ extern heap_t *kheap;
 #define INDEX_FROM_BIT(a) (a/(8*4))
 #define OFFSET_FROM_BIT(a) (a%(8*4))
 
+int32_t allocated_frames = 0;
+
 // Static function to set a bit in the frames bitset
 static void set_frame(uint32_t frame_addr)
 {
@@ -31,6 +33,8 @@ static void set_frame(uint32_t frame_addr)
     uint32_t idx = INDEX_FROM_BIT(frame);
     uint32_t off = OFFSET_FROM_BIT(frame);
     frames[idx] |= (0x1 << off);
+
+    allocated_frames++;
 }
 
 // Static function to clear a bit in the frames bitset
@@ -40,8 +44,9 @@ static void clear_frame(uint32_t frame_addr)
     uint32_t idx = INDEX_FROM_BIT(frame);
     uint32_t off = OFFSET_FROM_BIT(frame);
     frames[idx] &= ~(0x1 << off);
-}
 
+    allocated_frames--;
+}
 
 // Static function to find the first free frame.
 static uint32_t first_frame()
@@ -64,9 +69,7 @@ static uint32_t first_frame()
 void alloc_frame(page_t *page, bool is_kernel, bool is_writeable)
 {
     if (page->frame != 0)
-    {
         return;
-    }
     else
     {
         uint32_t idx = first_frame();
@@ -167,7 +170,7 @@ page_t *get_page(uint32_t address, bool make, page_directory_t *dir)
     // Find the page table containing this address.
     uint32_t table_idx = address / 1024;
 
-    if (dir->tables[table_idx]) // If this table is already assigned
+    if (dir->tables[table_idx] != NULL) // If this table is already assigned
         return &dir->tables[table_idx]->pages[address%1024];
     else if(make)
     {
