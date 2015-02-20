@@ -1,0 +1,17 @@
+# backup files
+*~
+
+# binaries
+kernel
+make_initrd
+*.iso
+*.img
+*.elf
+*.o
+
+# logs
+*.log
+*.txt
+
+# OS X is stupid
+.DS_Store
