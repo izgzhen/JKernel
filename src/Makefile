@@ -22,7 +22,8 @@ SOURCES=                			\
 	process/task.o\
 	usr/syscall.o\
 	test/memory.o\
-	dev/serial.o
+	dev/serial.o\
+	lib/elf.o
 
 CFLAGS=-g -O0 -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -m32 -I./include
 LDFLAGS=-T link.ld -m elf_i386

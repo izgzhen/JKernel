@@ -6,11 +6,12 @@
 #include  "panic.h"
 
 static elf_t kernel_elf;
+multiboot_header_t *mboot_ptr;
 
 void init_debug()
 {
     // 从 GRUB 提供的信息中获取到内核符号表和代码地址信息
-    kernel_elf = elf_from_multiboot(glb_mboot_ptr);
+    kernel_elf = elf_from_multiboot(mboot_ptr);
 }
 
 void print_cur_status() {

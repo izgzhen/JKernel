@@ -6,14 +6,14 @@
 #ifndef INCLUDE_ELF_H_
 #define INCLUDE_ELF_H_
 
+#include "string.h"
 #include "common.h"
 #include "multiboot.h"
 
 #define ELF32_ST_TYPE(i) ((i)&0xf)
 
 // ELF 格式区段头
-typedef
-struct elf_section_header_t {
+typedef struct elf_section_header_t {
   uint32_t name;
   uint32_t type;
   uint32_t flags;

@@ -14,6 +14,7 @@
 
 extern uint32_t placement_address;
 uint32_t initial_esp;
+extern multiboot_header_t *mboot_ptr;
 
 void serial_com(){
     s_write("Serial ports...\n");
@@ -50,8 +51,9 @@ void showFS(){
    asm volatile("sti");
 }  
 
-int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
+int k_main(multiboot_header_t *ptr, uint32_t initial_stack)
 {
+    mboot_ptr = ptr;
     initial_esp = initial_stack;
     monitor_clear();
 
@@ -90,19 +92,19 @@ int k_main(struct multiboot *mboot_ptr, uint32_t initial_stack)
     fs_root = initialise_initrd(initrd_location);
 
      // Create a new process in a new address space which is a clone of this.
-    int ret = fork();
+    /*    int ret = fork();
 
     monitor_write("fork() returned ");
     monitor_write_hex(ret);
     monitor_write(", and getpid() returned ");
     monitor_write_hex(getpid());
-
+    */
     showFS();
 
-    // printf("Switching to user mode...\n");
-    // switch_to_user_mode();
+    printf("Switching to user mode...\n");
+    switch_to_user_mode();
     
-    // syscall_monitor_write("Hello, user world!\n");
+    syscall_monitor_write("Hello, user world!\n");
 
     return 0;
 }

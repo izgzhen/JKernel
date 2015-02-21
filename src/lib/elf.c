@@ -3,8 +3,6 @@
  *       Author:  Hurley (LiuHuan), liuhuan1992@gmail.com
  */
 
-#include "common.h"
-#include "string.h"
 #include "elf.h"
 
 // 从 multiboot_header_t 结构获取ELF信息

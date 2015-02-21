@@ -3,7 +3,7 @@
 
 // Compare two strings. Should return -1 if 
 // str1 < str2, 0 if they are equal or 1 otherwise.
-int strcmp(char *str1, char *str2)
+int strcmp(const char *str1, const char *str2)
 {
       int i = 0;
       int failed = 0;

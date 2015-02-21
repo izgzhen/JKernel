@@ -2,6 +2,8 @@
 #define PANIC_H
 
 #include <stdio.h>
+#include <elf.h>
+#include <multiboot.h>
 
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))
