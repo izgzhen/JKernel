@@ -1,5 +1,3 @@
-/* Link.ld -- Linker script for the kernel - ensure everything goes in the */
-/*            Correct place.  */
 ENTRY(start)
 SECTIONS
 {

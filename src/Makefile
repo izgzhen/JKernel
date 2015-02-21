@@ -25,7 +25,7 @@ SOURCES=                			\
 	dev/serial.o
 
 CFLAGS=-g -O0 -Wall -nostdlib -nostdinc -fno-builtin -fno-stack-protector -m32 -I./include
-LDFLAGS=-Tlink.ld -melf_i386
+LDFLAGS=-T link.ld -m elf_i386
 ASFLAGS=-felf
 
 all: $(SOURCES) link
